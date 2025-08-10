@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Aegis AI</title>
+  <link rel="stylesheet" href="../Mental_Health_chatbot/style.css" />
+  <link rel="website icon" href="../Mental_Health_chatbot/Logo.png" />
+</head>
+<body>
+  <div class="container">
+    
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo">
+        <div class="logo-brand">
+          <img id="site-logo" src="../Mental_Health_chatbot/Logo.png" alt="App Logo" />
+          <span class="logo-text">AegisAI</span>
+        </div>
+        <button id="theme-toggle">🌙</button>
+      </div>
+
+      <div class="new-chat" id="new-chat-btn">New chat</div>
+      <div class="active-chat" id="chat-list"></div>
+      <div class="user-email">user@example.com</div>
+    </aside>
+
+    <!-- Main Chat Area -->
+    <main class="main-area">
+      <!-- Center screen before chat starts -->
+      <div class="chat-start" id="chat-start">
+        <div class="welcome-text">Ready when you are.</div>
+        <div class="chat-input">
+          <div class="input-wrapper">
+            <input type="text" id="input-start" placeholder="Ask anything..." />
+            <button id="send-start" class="send-inside">➤</button>
+          </div>
+
+          <!-- Language button -->
+          <select class="language-select">
+            <option value="en">English</option>
+            <option value="ta">தமிழ்</option>
+          </select>
+
+          <!-- Mic button -->
+          <button class="mic-btn" aria-label="Voice Input">
+            <img src="../Mental_Health_chatbot/speaker.png" alt="Mic Icon" class="mic-icon" />
+          </button>
+        </div>
+      </div>
+
+      <!-- Full Chat Area -->
+      <div class="chat-content" id="chat-content">
+        <div class="message-area" id="message-area"></div>
+        <div class="chat-input">
+          <div class="input-wrapper">
+            <input type="text" id="input-chat" placeholder="Ask anything..." />
+            <button id="send-chat" class="send-inside">➤</button>
+          </div>
+
+          
+          <select class="language-select">
+            <option value="en">English</option>
+            <option value="ta">தமிழ்</option>
+          </select>
+
+          <!-- Mic button -->
+          <button class="mic-btn" aria-label="Voice Input">
+            <img src="../Mental_Health_chatbot/speaker.png" alt="Mic Icon" class="mic-icon" />
+          </button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+
+  <div id="voice-status" class="voice-status hidden">🎤 Listening...</div>
+
+  <script src="../Mental_Health_chatbot/script.js"></script>
+</body>
+</html>

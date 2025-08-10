@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="website icon" type="png" href="logo.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style-cursor.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js/dist/umd/supabase.min.js"></script>
+    <script src="script.js" defer></script>
+    <script src="cursor.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <div class="form-box login">
+                <h2>Login</h2>
+                <form id="login-form">
+                    <div class="input-group">
+                        <div class="input-field">
+                            <input type="email" name="email" required>
+                            <label>Email</label>
+                            <span class="input-border"></span>
+                        </div>
+                        <div class="input-field">
+                            <input type="password" name="password" required>
+                            <label>Password</label>
+                            <span class="input-border"></span>
+                        </div>
+                        <div class="forgot">
+                            <a href="#">Forgot Password?</a>
+                        </div>
+                        <button type="submit">Login</button>
+                    </div>
+                    <div class="switch">
+                        Don't have an account? <a href="signup.html">Sign Up</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="bubbles">
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+        </div>
+    </div>
+    <script>
+    // Supabase config
+    const SUPABASE_URL = 'https://dcyfqrvttjsaeiqlksvv.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRjeWZxcnZ0dGpzYWVpcWxrc3Z2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQxNDAwNTMsImV4cCI6MjA2OTcxNjA1M30.52rpZXmA5K6dLf97FDaY8-2LcOYYclW3-UdZGGRl0Jc';
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    // Login logic
+    document.getElementById('login-form').addEventListener('submit', async function(e){
+        e.preventDefault();
+        const email = this.email.value.trim().toLowerCase();
+        const password = this.password.value;
+
+        // Check user credentials
+        const { data: user, error } = await supabase
+            .from('signup')
+            .select('id, full_name')
+            .eq('email', email)
+            .eq('password', password);
+
+        if(error) {
+            alert('Login failed: ' + error.message);
+            return;
+        }
+        if(user && user.length) {
+            // Store user session
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('userId', user[0].id);
+            localStorage.setItem('userName', user[0].full_name);
+            
+            alert('Login successful! Welcome, ' + user[0].full_name);
+            window.location.href = 'Mental_Health_chatbot/index.html';
+        } else {
+            alert('User not found. Please sign up first.');
+            window.location.href = 'signup.html';
+        }
+    });
+    </script>
+</body>
+</html>

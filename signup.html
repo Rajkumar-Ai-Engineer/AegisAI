@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="website icon" type="png" href="logo.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style-cursor.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js/dist/umd/supabase.min.js"></script>
+    <script src="script.js" defer></script>
+    <script src="cursor.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <div class="form-box signup">
+                <h2>Sign Up</h2>
+                <form id="signup-form">
+                    <div class="input-group">
+                        <div class="input-field">
+                            <input type="text" name="full_name" required>
+                            <label>Full Name</label>
+                            <span class="input-border"></span>
+                        </div>
+                        <div class="input-field">
+                            <input type="email" name="email" required>
+                            <label>Email</label>
+                            <span class="input-border"></span>
+                        </div>
+                        <div class="input-field">
+                            <input type="password" name="password" required>
+                            <label>Password</label>
+                            <span class="input-border"></span>
+                        </div>
+                        <div class="input-field">
+                            <input type="password" name="confirm_password" required>
+                            <label>Confirm Password</label>
+                            <span class="input-border"></span>
+                        </div>
+                        <div class="input-field">
+                            <input type="tel" name="guardian_phone" required>
+                            <label>Guardian Phone Number</label>
+                            <span class="input-border"></span>
+                        </div>
+                        <button type="submit">Sign Up</button>
+                    </div>
+                    <div class="switch">
+                        Already have an account? <a href="login.html">Login</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="bubbles">
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+        </div>
+    </div>
+    <script>
+    // Supabase config
+    const SUPABASE_URL = 'https://dcyfqrvttjsaeiqlksvv.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRjeWZxcnZ0dGpzYWVpcWxrc3Z2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQxNDAwNTMsImV4cCI6MjA2OTcxNjA1M30.52rpZXmA5K6dLf97FDaY8-2LcOYYclW3-UdZGGRl0Jc';
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    // Signup logic
+    document.getElementById('signup-form').addEventListener('submit', async function(e){
+        e.preventDefault();
+        const full_name = this.full_name.value.trim();
+        const email = this.email.value.trim().toLowerCase();
+        const password = this.password.value;
+        const confirm_password = this.confirm_password.value;
+        const guardian_phone = this.guardian_phone.value.trim();
+
+        if(password !== confirm_password) {
+            alert('Passwords do not match.');
+            return;
+        }
+
+        // Check if user already exists
+        const { data: userExists, error: existError } = await supabase
+            .from('signup')
+            .select('id')
+            .eq('email', email);
+        if(userExists && userExists.length) {
+            alert('User already exists. Try logging in.');
+            window.location.href = 'login.html';
+            return;
+        }
+
+        // Insert new user
+        const { error } = await supabase
+            .from('signup')
+            .insert([{ full_name, email, password, guardian_phone }]);
+        if(error) {
+            alert('Signup failed: ' + error.message);
+        } else {
+            alert('Signup successful! Please login.');
+            window.location.href = 'login.html';
+        }
+    });
+    </script>
+</body>
+</html>
